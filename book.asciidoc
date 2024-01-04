@@ -6,6 +6,13 @@
 :icons: font
 :source-highlighter: rouge
 :pdf-fontsdir: .
+:stem: latexmath
+
+++++
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.min.js">
+</script>
+++++
 
 include::preface.asciidoc[]
 include::glossary.asciidoc[]
