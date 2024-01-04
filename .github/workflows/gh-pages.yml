@@ -21,7 +21,7 @@ jobs:
       run: gem install asciidoctor
 
     - name: Convert AsciiDoc to HTML
-      run: asciidoctor -b html5 -D output your-asciidoc-file.adoc
+      run: asciidoctor -b html5 -D output book.asciidoc
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
