@@ -15,7 +15,7 @@ jobs:
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.0' 
+        ruby-version: '3.0'
 
     - name: Install Asciidoctor
       run: gem install asciidoctor
@@ -28,9 +28,11 @@ jobs:
     - name: Copy Images
       run: cp -r images output/
 
+    - name: Create CNAME File
+      run: echo 'mastering-bitcoin.doge.tg' > output/CNAME
+
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./output
-
