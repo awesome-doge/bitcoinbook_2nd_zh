@@ -14,6 +14,8 @@ jobs:
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0' 
 
     - name: Install Asciidoctor
       run: gem install asciidoctor
