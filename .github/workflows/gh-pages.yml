@@ -1,4 +1,4 @@
-name: Build and Publish Book
+name: Publish AsciiDoc to GitHub Pages
 
 on:
   push:
@@ -6,39 +6,23 @@ on:
       - master
 
 jobs:
-  build-and-release:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up Ruby
+    - name: Setup Ruby
       uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.0'
 
     - name: Install Asciidoctor
-      run: |
-        gem install asciidoctor
-        gem install asciidoctor-pdf
-        # Add other necessary tools or plugins here
+      run: gem install asciidoctor
 
-    - name: Compile Book to PDF
-      run: asciidoctor-pdf -D output book.asciidoc
-      # Replace book.asciidoc with your main file if different
+    - name: Convert AsciiDoc to HTML
+      run: asciidoctor -b html5 -D output your-asciidoc-file.adoc
 
-    - name: Compile Other Formats
-      run: |
-        # Add commands to generate other formats here
-
-    - name: Upload to GitHub Releases
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./output/book.pdf
-        asset_name: book.pdf
-        asset_content_type: application/pdf
-        # Repeat for other formats
-
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./output
