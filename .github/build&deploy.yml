@@ -1,32 +1,44 @@
-name: Build and Deploy Book
+name: Build and Publish Book
 
 on:
   push:
     branches:
-      - master  # 假設您的主要分支是 master
+      - master
 
 jobs:
-  build-deploy:
+  build-and-release:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
       with:
-        node-version: '14'  # 選擇合適的 Node.js 版本
+        ruby-version: '3.0'
 
-    - name: Install Dependencies
-      run: npm install
+    - name: Install Asciidoctor
+      run: |
+        gem install asciidoctor
+        gem install asciidoctor-pdf
+        # Add other necessary tools or plugins here
 
-    - name: Build Book
-      run: npx asciidoctor-web-pdf Summary.asciidoc -o book.html  # 使用 AsciiDoctor 生成網頁書
+    - name: Compile Book to PDF
+      run: asciidoctor-pdf -D output book.asciidoc
+      # Replace book.asciidoc with your main file if different
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Compile Other Formats
+      run: |
+        # Add commands to generate other formats here
+
+    - name: Upload to GitHub Releases
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages  # 選擇要部署的目標分支
-        publish_dir: ./  # 指定包含生成的書籍文件的目錄
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./output/book.pdf
+        asset_name: book.pdf
+        asset_content_type: application/pdf
+        # Repeat for other formats
+
