@@ -21,10 +21,16 @@ jobs:
       run: gem install asciidoctor
 
     - name: Convert AsciiDoc to HTML
-      run: asciidoctor -b html5 -D output book.asciidoc
+      run: |
+        asciidoctor -b html5 -D output book.asciidoc
+        mv output/book.html output/index.html
+
+    - name: Copy Images
+      run: cp -r images output/
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./output
+
