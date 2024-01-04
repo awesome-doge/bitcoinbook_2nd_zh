@@ -1,0 +1,32 @@
+name: Build and Deploy Book
+
+on:
+  push:
+    branches:
+      - master  # 假設您的主要分支是 master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'  # 選擇合適的 Node.js 版本
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Book
+      run: npx asciidoctor-web-pdf Summary.asciidoc -o book.html  # 使用 AsciiDoctor 生成網頁書
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages  # 選擇要部署的目標分支
+        publish_dir: ./  # 指定包含生成的書籍文件的目錄
