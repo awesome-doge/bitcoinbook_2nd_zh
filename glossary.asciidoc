@@ -193,7 +193,7 @@ P2WSH::
 RIPEMD-160::
     RIPEMD-160是一個160位的加密雜湊方法。RIPEMD-160是RIPEMD的一個加強版本，具有160位雜湊結果，預計在未來十年或更長時間內可以保證安全。
 
-中本聰（satoshi）::
+聰（satoshi）::
     聰（satoshi）是可以記錄在區塊鏈上的最小比特幣單位。它相當於0.00000001比特幣，以比特幣的創造者中本聰（Satoshi Nakamoto）命名
 
 中本聰（Satoshi Nakamoto）::
