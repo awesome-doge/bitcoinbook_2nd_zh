@@ -26,7 +26,8 @@ jobs:
       run: |
         mkdir -p fonts
         wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip -O fonts/NotoSansCJKsc-hinted.zip
-        unzip fonts/NotoSansCJKsc-hinted.zip -d fonts/
+        unzip -o fonts/NotoSansCJKsc-hinted.zip -d fonts/
+        ls -al fonts/  # List files to verify extraction
 
     - name: Create PDF Theme
       run: |
