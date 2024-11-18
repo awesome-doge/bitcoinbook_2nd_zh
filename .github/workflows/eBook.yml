@@ -20,8 +20,8 @@ jobs:
 
     - name: Install Asciidoctor and Dependencies
       run: |
-        gem install asciidoctor asciidoctor-pdf asciidoctor-epub3
-
+        gem install asciidoctor asciidoctor-pdf asciidoctor-epub3 rouge
+        
     - name: Convert AsciiDoc to PDF
       run: |
         mkdir -p output
