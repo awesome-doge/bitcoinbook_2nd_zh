@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
@@ -40,12 +40,14 @@ jobs:
         zip mastering-bitcoin.zip *.pdf *.epub
 
     - name: Upload to GitHub Release
-      uses: ncipollo/release-action@v1
+      uses: softprops/action-gh-release@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag: v1.0.0
-        release_name: "Mastering Bitcoin eBook"
         files: |
           output/mastering-bitcoin.zip
           output/book.pdf
           output/book.epub
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: v1.0.0
+        name: "Mastering Bitcoin eBook Release"
+        body: |
+          This release includes the latest version of the Mastering Bitcoin eBook in PDF and EPUB formats.
