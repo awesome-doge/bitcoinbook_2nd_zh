@@ -1,4 +1,4 @@
-name: Publish AsciiDoc as eBook Release
+name: Publish AsciiDoc to GitHub Pages
 
 on:
   push:
@@ -6,100 +6,37 @@ on:
       - master
 
 jobs:
-  build-and-release:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.0'
 
-    - name: Install Asciidoctor and Dependencies
+    - name: Install Asciidoctor and EPUB Converter
       run: |
-        gem install asciidoctor asciidoctor-pdf asciidoctor-epub3 rouge
+        gem install asciidoctor asciidoctor-epub3
 
-    - name: Add Fonts
+    - name: Convert AsciiDoc to HTML
       run: |
-        mkdir -p fonts
-        echo "Downloading fonts..."
-        for i in {1..3}; do
-          wget --timeout=60 --tries=3 https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip -O fonts/NotoSansCJKsc-hinted.zip && break
-          echo "Download failed. Retrying ($i/3)..."
-        done
-        if [ ! -f fonts/NotoSansCJKsc-hinted.zip ]; then
-          echo "Error: Font download failed after 3 attempts."
-          exit 1
-        fi
-        echo "Unzipping fonts..."
-        unzip -o fonts/NotoSansCJKsc-hinted.zip -d fonts/
-        echo "Contents of fonts directory after extraction:"
-        find fonts/ -type f
-
-    - name: Verify Font Files
-      run: |
-        # Verify if the required fonts are present
-        if [ ! -f fonts/NotoSansCJKsc-Regular.otf ]; then
-          echo "Error: NotoSansCJKsc-Regular.otf not found!"
-          echo "Current contents of fonts directory:"
-          find fonts/ -type f
-          exit 1
-        fi
-        if [ ! -f fonts/NotoSansCJKsc-Bold.otf ]; then
-          echo "Error: NotoSansCJKsc-Bold.otf not found!"
-          echo "Current contents of fonts directory:"
-          find fonts/ -type f
-          exit 1
-        fi
-
-    - name: Create PDF Theme
-      run: |
-        cat > theme.yml <<EOL
-        extends: default
-
-        font:
-          catalog:
-            NotoSans:
-              normal: fonts/NotoSansCJKsc-Regular.otf
-              bold: fonts/NotoSansCJKsc-Bold.otf
-              italic: fonts/NotoSansCJKsc-Regular.otf
-              bold_italic: fonts/NotoSansCJKsc-Bold.otf
-
-          fallbacks:
-            - NotoSans
-
-          default_family: NotoSans
-        EOL
-
-    - name: Convert AsciiDoc to PDF
-      run: |
-        mkdir -p output
-        asciidoctor-pdf -D output book.asciidoc -a pdf-theme=theme.yml -a pdf-fontsdir=fonts
+        asciidoctor -b html5 -D output book.asciidoc
+        mv output/book.html output/index.html
 
     - name: Convert AsciiDoc to EPUB
-      run: |
-        asciidoctor-epub3 -D output book.asciidoc -a epub-embed-fonts=fonts/NotoSansCJKsc-Regular.otf,fonts/NotoSansCJKsc-Bold.otf
+      run: asciidoctor-epub3 -o output/book.epub book.asciidoc
 
-    - name: Copy Additional Resources
+    - name: Copy Images
       run: cp -r images output/
 
-    - name: Create Release Artifacts
-      run: |
-        cd output
-        zip mastering-bitcoin.zip *.pdf *.epub
+    - name: Create CNAME File
+      run: echo 'mastering-bitcoin.doge.tg' > output/CNAME
 
-    - name: Upload to GitHub Release
-      uses: softprops/action-gh-release@v1
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        files: |
-          output/mastering-bitcoin.zip
-          output/book.pdf
-          output/book.epub
-        token: ${{ secrets.GITHUB_TOKEN }}
-        tag_name: v1.0.0
-        name: "Mastering Bitcoin eBook Release"
-        body: |
-          This release includes the latest version of the Mastering Bitcoin eBook in PDF and EPUB formats with proper Chinese font support.
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./output
