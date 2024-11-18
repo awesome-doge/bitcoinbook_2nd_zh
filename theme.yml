@@ -1,0 +1,14 @@
+extends: default
+
+font:
+  catalog:
+    NotoSans:
+      normal: fonts/NotoSansCJKsc-Regular.ttf
+      bold: fonts/NotoSansCJKsc-Bold.ttf
+      italic: fonts/NotoSansCJKsc-Regular.ttf
+      bold_italic: fonts/NotoSansCJKsc-Bold.ttf
+
+  fallbacks:
+    - NotoSans
+
+  default_family: NotoSans
