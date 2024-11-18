@@ -27,7 +27,6 @@ jobs:
         mkdir -p fonts
         wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip -O fonts/NotoSansCJKsc-hinted.zip
         unzip fonts/NotoSansCJKsc-hinted.zip -d fonts/
-        mv fonts/*/*.ttf fonts/  # Move .ttf files to the fonts directory
 
     - name: Create PDF Theme
       run: |
@@ -37,10 +36,10 @@ jobs:
         font:
           catalog:
             NotoSans:
-              normal: fonts/NotoSansCJKsc-Regular.ttf
-              bold: fonts/NotoSansCJKsc-Bold.ttf
-              italic: fonts/NotoSansCJKsc-Regular.ttf
-              bold_italic: fonts/NotoSansCJKsc-Bold.ttf
+              normal: fonts/NotoSansCJKsc-Regular.otf
+              bold: fonts/NotoSansCJKsc-Bold.otf
+              italic: fonts/NotoSansCJKsc-Regular.otf
+              bold_italic: fonts/NotoSansCJKsc-Bold.otf
 
           fallbacks:
             - NotoSans
@@ -55,7 +54,7 @@ jobs:
 
     - name: Convert AsciiDoc to EPUB
       run: |
-        asciidoctor-epub3 -D output book.asciidoc -a epub-embed-fonts=fonts/NotoSansCJKsc-Regular.ttf,fonts/NotoSansCJKsc-Bold.ttf
+        asciidoctor-epub3 -D output book.asciidoc -a epub-embed-fonts=fonts/NotoSansCJKsc-Regular.otf,fonts/NotoSansCJKsc-Bold.otf
 
     - name: Copy Additional Resources
       run: cp -r images output/
