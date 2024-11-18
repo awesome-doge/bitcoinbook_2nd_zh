@@ -1,0 +1,51 @@
+name: Publish AsciiDoc as eBook Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+
+    - name: Install Asciidoctor and Dependencies
+      run: |
+        gem install asciidoctor asciidoctor-pdf asciidoctor-epub3
+
+    - name: Convert AsciiDoc to PDF
+      run: |
+        mkdir -p output
+        asciidoctor-pdf -D output book.asciidoc
+
+    - name: Convert AsciiDoc to EPUB
+      run: |
+        asciidoctor-epub3 -D output book.asciidoc
+
+    - name: Copy Additional Resources
+      run: cp -r images output/
+
+    - name: Create Release Artifacts
+      run: |
+        cd output
+        zip mastering-bitcoin.zip *.pdf *.epub
+
+    - name: Upload to GitHub Release
+      uses: ncipollo/release-action@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: v1.0.0
+        release_name: "Mastering Bitcoin eBook"
+        files: |
+          output/mastering-bitcoin.zip
+          output/book.pdf
+          output/book.epub
