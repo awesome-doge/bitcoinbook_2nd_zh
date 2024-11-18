@@ -27,18 +27,20 @@ jobs:
         mkdir -p fonts
         wget https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip -O fonts/NotoSansCJKsc-hinted.zip
         unzip -o fonts/NotoSansCJKsc-hinted.zip -d fonts/
-        ls -al fonts/  # List all files in the fonts directory for debugging
+        echo "Contents of fonts directory after unzipping:"
+        ls -R fonts/
 
-    - name: Verify Font Files
+    - name: Organize Fonts
       run: |
-        if [ ! -f fonts/NotoSansCJKsc-Regular.otf ]; then
-          echo "Error: NotoSansCJKsc-Regular.otf not found in fonts directory!"
+        # Check if .otf files exist in subdirectories
+        if [ "$(find fonts/ -name '*.otf' | wc -l)" -eq 0 ]; then
+          echo "Error: No .otf font files found after extraction."
           exit 1
         fi
-        if [ ! -f fonts/NotoSansCJKsc-Bold.otf ]; then
-          echo "Error: NotoSansCJKsc-Bold.otf not found in fonts directory!"
-          exit 1
-        fi
+        # Move .otf files to the root fonts/ directory
+        find fonts/ -name '*.otf' -exec mv {} fonts/ \;
+        echo "Contents of fonts directory after organizing:"
+        ls -R fonts/
 
     - name: Create PDF Theme
       run: |
