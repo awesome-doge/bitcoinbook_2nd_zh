@@ -21,16 +21,22 @@ jobs:
     - name: Install Asciidoctor and Dependencies
       run: |
         gem install asciidoctor asciidoctor-pdf asciidoctor-epub3 rouge
-        
+
+    - name: Add Fonts
+      run: |
+        mkdir -p fonts
+        wget -O fonts/NotoSansCJKsc-Regular.ttf https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip
+        wget -O fonts/NotoSansCJKsc-Bold.ttf https://noto-website-2.storage.googleapis.com/pkgs/NotoSansCJKsc-hinted.zip
+        unzip -j fonts/NotoSansCJKsc-hinted.zip -d fonts/
+
     - name: Convert AsciiDoc to PDF
       run: |
         mkdir -p output
         asciidoctor-pdf -D output book.asciidoc -a pdf-theme=theme.yml -a pdf-fontsdir=fonts
 
-
     - name: Convert AsciiDoc to EPUB
       run: |
-        asciidoctor-epub3 -D output book.asciidoc
+        asciidoctor-epub3 -D output book.asciidoc -a epub-embed-fonts
 
     - name: Copy Additional Resources
       run: cp -r images output/
