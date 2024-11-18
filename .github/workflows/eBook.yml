@@ -10,41 +10,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Setup Ruby environment for AsciiDoctor
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.0'
 
-    # Install Asciidoctor and Plugins
     - name: Install Asciidoctor and Plugins
       run: |
-        gem install asciidoctor asciidoctor-epub3
+        gem install asciidoctor asciidoctor-epub3 rouge
 
-    # Convert AsciiDoc to HTML and EPUB
-    - name: Convert AsciiDoc to HTML and EPUB
+    - name: Convert AsciiDoc to HTML
       run: |
         mkdir -p output
         asciidoctor -b html5 -D output book.asciidoc
-        asciidoctor -b epub3 -D output book.asciidoc
 
-    # Move HTML file to Pages index
+    - name: Convert AsciiDoc to EPUB
+      run: |
+        mkdir -p output
+        asciidoctor -b epub3 -D output book.asciidoc --trace
+
     - name: Rename HTML for GitHub Pages
       run: mv output/book.html output/index.html
 
-    # Copy Images to Output Directory
     - name: Copy Images
       run: cp -r images output/
 
-    # Create CNAME File
     - name: Create CNAME File
       run: echo 'mastering-bitcoin.doge.tg' > output/CNAME
 
-    # Deploy to GitHub Pages
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -55,28 +51,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout the repository
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Setup Ruby environment for AsciiDoctor
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.0'
 
-    # Install Asciidoctor and Plugins
     - name: Install Asciidoctor and Plugins
       run: |
-        gem install asciidoctor asciidoctor-epub3
+        gem install asciidoctor asciidoctor-epub3 rouge
 
-    # Convert AsciiDoc to EPUB
     - name: Convert AsciiDoc to EPUB
       run: |
         mkdir -p output
-        asciidoctor -b epub3 -D output book.asciidoc
+        asciidoctor -b epub3 -D output book.asciidoc --trace
 
-    # Determine Tag and Release Name
     - name: Set Release Tag
       id: release_tag
       run: |
@@ -84,7 +75,6 @@ jobs:
         echo "tag=$TAG" >> $GITHUB_ENV
         echo "release_name=Book Release $TAG" >> $GITHUB_ENV
 
-    # Create GitHub Release
     - name: Create GitHub Release
       uses: ncipollo/release-action@v1
       with:
