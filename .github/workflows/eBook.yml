@@ -25,7 +25,8 @@ jobs:
     - name: Convert AsciiDoc to PDF
       run: |
         mkdir -p output
-        asciidoctor-pdf -D output book.asciidoc
+        asciidoctor-pdf -D output book.asciidoc -a pdf-theme=theme.yml -a pdf-fontsdir=fonts
+
 
     - name: Convert AsciiDoc to EPUB
       run: |
