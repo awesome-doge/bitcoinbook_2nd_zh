@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.23">
-<title>精通比特幣</title>
+<meta name="generator" content="Asciidoctor 2.0.26">
+<meta name="description" content="《精通比特幣》（Mastering Bitcoin）2017 年第二版繁體中文譯本，免費線上閱讀。2023 年第三版繁體中文全文請見 bitcoinbook-3nd-zh.doge.tg。">
+<title>精通比特幣（第二版）繁體中文版</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -116,7 +117,6 @@ h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title str
 :not(pre):not([class^=L])>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background:#f7f7f8;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre{color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;line-height:1.45;text-rendering:optimizeSpeed}
 pre code,pre pre{color:inherit;font-size:inherit;line-height:inherit}
-pre>code{display:block}
 pre.nowrap,pre.nowrap pre{white-space:pre;word-wrap:normal}
 em em{font-style:normal}
 strong strong{font-weight:400}
@@ -219,6 +219,7 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .literalblock pre,.listingblock>.content>pre:not(.highlight),.listingblock>.content>pre[class=highlight],.listingblock>.content>pre[class^="highlight "]{background:#f7f7f8}
 .literalblock.output pre{color:#f7f7f8;background:rgba(0,0,0,.9)}
 .listingblock>.content{position:relative}
+.listingblock pre>code{display:block}
 .listingblock code[data-lang]::before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:inherit;opacity:.5}
 .listingblock:hover code[data-lang]::before{display:block}
 .listingblock.terminal pre .command::before{content:attr(data-prompt);padding-right:.5em;color:inherit;opacity:.5}
@@ -434,12 +435,25 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="canonical" href="https://mastering-bitcoin.doge.tg/">
+<meta property="og:type" content="book">
+<meta property="og:title" content="精通比特幣（第二版）繁體中文版">
+<meta property="og:description" content="《精通比特幣》（Mastering Bitcoin）2017 年第二版的繁體中文譯本。2023 年第三版的繁體中文全文已在 bitcoinbook-3nd-zh.doge.tg 免費線上閱讀。">
+<meta property="og:url" content="https://mastering-bitcoin.doge.tg/">
+<meta property="og:locale" content="zh_TW">
+<style>
+.third-edition-banner{margin:0 0 1em;padding:.75em 1.25em;background:#fff4e5;border-bottom:1px solid #f0c48a;font-size:1rem;line-height:1.6;color:#4a3a28}
+.third-edition-banner a{color:#b45309;font-weight:600}
+</style>
 </head>
 <body class="book toc2 toc-left">
+<div class="third-edition-banner" role="note">
+本頁是 2017 年的第二版。<a href="https://bitcoinbook-3nd-zh.doge.tg/">《精通比特幣》第三版（2023）繁體中文全文</a>已免費線上閱讀，新增隔離見證、Taproot、Schnorr 簽章與交易手續費等內容。
+</div>
 <div id="header">
 <h1>精通比特幣</h1>
 <div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
+<div id="toctitle">目錄</div>
 <ul class="sectlevel1">
 <li><a href="#_前言">前言</a>
 <ul class="sectlevel2">
@@ -835,6 +849,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </script>
 <div class="paragraph">
 <p>本書由 Dr. Awesome Doge 翻譯。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+這是 2017 年出版的第二版。2023 年的第三版已全面更新到當代的比特幣，並有繁體中文全文譯本：https://bitcoinbook-3nd-zh.doge.tg/[《精通比特幣》第三版繁體中文版]。
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -12464,7 +12490,7 @@ ENDIF</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-11-18 12:56:26 UTC
+Last updated 2026-11-06 10:25:00 UTC
 </div>
 </div>
 <script type="text/x-mathjax-config">
@@ -12490,6 +12516,6 @@ MathJax.Hub.Register.StartupHook("AsciiMath Jax Ready", function () {
   })
 })
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </body>
 </html>
