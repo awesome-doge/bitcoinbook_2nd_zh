@@ -7,6 +7,11 @@
 :source-highlighter: rouge
 :pdf-fontsdir: .
 :stem: latexmath
+:title: 精通比特幣（第二版）繁體中文版
+:description: 《精通比特幣》（Mastering Bitcoin）2017 年第二版繁體中文譯本，免費線上閱讀。2023 年第三版繁體中文全文請見 bitcoinbook-3nd-zh.doge.tg。
+:docinfo: shared
+:lang: zh-Hant-TW
+:toc-title: 目錄
 
 ++++
 <script type="text/javascript" async
@@ -15,6 +20,8 @@
 ++++
 
 本書由 Dr. Awesome Doge 翻譯。
+
+TIP: 這是 2017 年出版的第二版。2023 年的第三版已全面更新到當代的比特幣，並有繁體中文全文譯本：https://bitcoinbook-3nd-zh.doge.tg/[《精通比特幣》第三版繁體中文版]。
 
 include::preface.asciidoc[]
 include::glossary.asciidoc[]
